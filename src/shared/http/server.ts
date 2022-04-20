@@ -3,13 +3,20 @@ import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
-import AppError from './errors/AppError';
+import AppError from '../errors/AppError';
+import '../container';
+import '../../database';
+import { errors } from 'celebrate';
+import routes from './routes';
 
 const app = express();
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
 app.use(cors());
+app.use(errors());
+
+app.use(routes);
 
 app.use(
   (error: Error, request: Request, response: Response, next: NextFunction) => {
