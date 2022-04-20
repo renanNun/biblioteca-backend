@@ -1,10 +1,14 @@
 import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import compression from 'compression';
 import AppError from './errors/AppError';
 
 const app = express();
 app.use(express.json());
+app.use(compression());
+app.use(helmet());
 app.use(cors());
 
 app.use(
@@ -15,8 +19,6 @@ app.use(
         message: error.message,
       });
     }
-
-    console.error(error);
 
     return response.status(500).json({
       status: 'error',
