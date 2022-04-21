@@ -22,7 +22,7 @@ export class CreateAuthorService {
 
     await this.authorsRepository.save(author);
 
-    await RedisCache.invalidatePrefix('authors');
+    await RedisCache.invalidatePrefix('author');
 
     return author;
   }
