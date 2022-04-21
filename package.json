@@ -10,7 +10,8 @@
     "build": "",
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
     "lint": "eslint . --ext .ts,.js",
-    "format": "npx prettier '**/*.ts' '**/*.js' --write"
+    "format": "npx prettier '**/*.ts' '**/*.js' --write",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "devDependencies": {
     "@types/compression": "^1.7.2",

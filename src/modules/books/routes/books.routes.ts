@@ -2,6 +2,7 @@ import { celebrate, Segments } from 'celebrate';
 import { Router } from 'express';
 import Joi from 'joi';
 import { CreateBookController } from '../controllers/CreateBookController';
+import { ListAllBooksController } from '../controllers/ListAllBooksController';
 
 const booksRouter = Router();
 
@@ -16,6 +17,18 @@ booksRouter.post(
     },
   }),
   new CreateBookController().handle
+);
+
+booksRouter.get(
+  '/',
+  celebrate({
+    [Segments.QUERY]: {
+      offset: Joi.number().min(1),
+      limit: Joi.number().min(1),
+      publisher: Joi.string(),
+    },
+  }),
+  new ListAllBooksController().handle
 );
 
 export default booksRouter;

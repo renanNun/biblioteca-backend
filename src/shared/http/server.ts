@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
@@ -5,7 +6,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import AppError from '../errors/AppError';
 import '../container';
-import '../../database';
+import './typeorm';
 import { errors } from 'celebrate';
 import routes from './routes';
 

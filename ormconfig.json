@@ -6,12 +6,12 @@
     "username": "postgres",
     "password": "biblioteca-backend",
     "database": "biblioteca-backend",
-    "entities": ["./src/app/models/*.ts"],
+    "entities": ["./src/modules/**/models/*.ts"],
     "migrations": [
-      "./src/database/migrations/*.ts"
+      "./src/shared/http/typeorm/migrations/*.ts"
     ],
     "cli": {
-      "migrationsDir": "./src/database/migrations"
+      "migrationsDir": "./src/shared/http/typeorm/migrations"
     },
     "synchronize": true
 }

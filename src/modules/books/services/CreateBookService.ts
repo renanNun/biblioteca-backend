@@ -18,7 +18,7 @@ export class CreateBookService {
       throw new AppError('Book already exists', 400);
     }
 
-    const book = await this.booksRepository.create();
+    const book = await this.booksRepository.create(data);
 
     await this.booksRepository.save(book);
 
