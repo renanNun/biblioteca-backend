@@ -24,7 +24,7 @@ export class UpdateBooksTable1650566797004 implements MigrationInterface {
         columnNames: ['author_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'authors',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       })
     );

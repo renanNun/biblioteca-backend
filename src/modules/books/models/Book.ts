@@ -20,7 +20,6 @@ export class Book {
   @Column()
   photo: string;
 
-  //ToDo: Transformar em uma classe e ter relação com o livro
   @Column()
   publisher: string;
 
