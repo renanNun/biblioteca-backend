@@ -6,7 +6,11 @@ export class CreateBookController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { title, publisher, photo, authors } = request.body;
 
+    console.log(`Creating book: ${title}`);
+
     const createBookService = container.resolve(CreateBookService);
+
+    console.log(`Before calling service`);
 
     const book = await createBookService.execute({
       title,
@@ -14,6 +18,8 @@ export class CreateBookController {
       photo,
       authors,
     });
+
+    console.log(`After calling service`);
 
     return response.status(201).json({
       message: 'Book created',

@@ -4,16 +4,14 @@ import { ListAllBooksService } from '../services/ListAllBooksService';
 
 export class ListAllBooksController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { offset, limit, publisher, author, category } = request.query;
+    const { offset, limit, publisher, author, category, order } = request.query;
 
     const listAllBooksService = container.resolve(ListAllBooksService);
 
     const books = await listAllBooksService.execute({
-      offset: Number(offset),
-      limit: Number(limit),
-      publisher: String(publisher) || '*',
-      author: String(author),
-      category: String(category),
+      offset: offset ? Number(offset) : 1,
+      limit: limit ? Number(limit) : 10,
+      order: order ? String(order) : 'ASC',
     });
 
     return response.status(200).json({

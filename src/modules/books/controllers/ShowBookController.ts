@@ -6,6 +6,8 @@ export class ShowBookController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
+    console.log(`Showing book: ${id}`);
+
     const showBookService = container.resolve(ShowBookService);
 
     const book = await showBookService.execute(id);

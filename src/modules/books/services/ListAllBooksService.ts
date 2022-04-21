@@ -12,7 +12,7 @@ export class ListAllBooksService {
   ) {}
 
   public async execute(data: IListBooks): Promise<Book[]> {
-    const cacheKey = `books:${data.offset}:${data.limit}`;
+    const cacheKey = `books:${data.offset}:${data.limit}:${data.order}`;
 
     const cachedBooks = await RedisCache.get<Book[]>(cacheKey);
 
@@ -20,7 +20,11 @@ export class ListAllBooksService {
       return cachedBooks;
     }
 
-    const books = await this.booksRepository.findAll(data);
+    const books = await this.booksRepository.findAll(
+      data.limit,
+      data.offset,
+      data.order
+    );
 
     await RedisCache.set(cacheKey, books);
 

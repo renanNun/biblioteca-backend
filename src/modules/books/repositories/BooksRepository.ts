@@ -11,9 +11,9 @@ export class BooksRepository implements IBooksRepository {
     this.booksRepository = getRepository(Book);
   }
 
-  public async findByTitle(title: string): Promise<Book> {
-    const book = await this.booksRepository.findOneOrFail({
-      where: { title },
+  public async findByTitle(title: string): Promise<Book | undefined> {
+    const book = await this.booksRepository.findOne({
+      where: { title: title },
     });
 
     return book;
@@ -29,14 +29,16 @@ export class BooksRepository implements IBooksRepository {
     await this.booksRepository.save(book);
   }
 
-  public async findAll(data: IListBooks): Promise<Book[]> {
+  public async findAll(
+    limit: number,
+    offset: number,
+    order: string
+  ): Promise<Book[]> {
     const books = await this.booksRepository
       .createQueryBuilder('book')
-      .where('book.publisher LIKE :publisher', {
-        publisher: `%${data.publisher}%`,
-      })
-      .take((data.limit || 10) as number)
-      .offset(((data.offset || 1) - 1) * (data.limit || 10))
+      .take(limit)
+      .offset((offset - 1) * limit)
+      .orderBy(order)
       .getMany();
 
     return books;
