@@ -49,4 +49,8 @@ export class BooksRepository implements IBooksRepository {
 
     return book;
   }
+
+  public async delete(id: string): Promise<void> {
+    await this.booksRepository.delete(id);
+  }
 }

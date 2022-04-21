@@ -2,6 +2,7 @@ import { celebrate, Segments } from 'celebrate';
 import { Router } from 'express';
 import Joi from 'joi';
 import { CreateBookController } from '../controllers/CreateBookController';
+import { DeleteBookController } from '../controllers/DeleteBookController';
 import { ListAllBooksController } from '../controllers/ListAllBooksController';
 import { ShowBookController } from '../controllers/ShowBookController';
 
@@ -40,6 +41,16 @@ booksRouter.get(
     },
   }),
   new ShowBookController().handle
+);
+
+booksRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  new DeleteBookController().handle
 );
 
 export default booksRouter;

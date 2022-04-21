@@ -8,4 +8,5 @@ export interface IBooksRepository {
   save(book: Book): Promise<void>;
   findAll(limit: number, offset: number, order: string): Promise<Book[]>;
   findById(id: string): Promise<Book>;
+  delete(id: string): Promise<void>;
 }
