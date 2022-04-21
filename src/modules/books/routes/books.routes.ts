@@ -15,7 +15,7 @@ booksRouter.post(
       title: Joi.string().required(),
       publisher: Joi.string().required(),
       photo: Joi.string().required(),
-      authors: Joi.string().required(),
+      author: Joi.string().required(),
     },
   }),
   new CreateBookController().handle
@@ -28,6 +28,7 @@ booksRouter.get(
       offset: Joi.number().min(1),
       limit: Joi.number().min(1),
       order: Joi.string().valid('ASC', 'DESC'),
+      author: Joi.string(),
     },
   }),
   new ListAllBooksController().handle

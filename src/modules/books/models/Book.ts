@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Author } from '../../author/models/Author';
 
 @Entity('books')
 export class Book {
@@ -21,9 +24,13 @@ export class Book {
   @Column()
   publisher: string;
 
-  //ToDo: Transformar em uma classe e ter relação com o livro
   @Column()
-  authors: string;
+  author_id: string;
+
+  //ToDo: Transformar em uma classe e ter relação com o livro
+  @ManyToOne(() => Author, (author) => author.books)
+  @JoinColumn({ name: 'author_id' })
+  author: string;
 
   // ToDo: Adicionar classe de data de publicação
 

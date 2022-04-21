@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateBooksTable1650502657178 implements MigrationInterface {
+export class CreateAuthorsTable1650567131357 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     await queryRunner.createTable(
       new Table({
-        name: 'books',
+        name: 'authors',
         columns: [
           {
             name: 'id',
@@ -15,33 +14,18 @@ export class CreateBooksTable1650502657178 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'title',
+            name: 'name',
             type: 'varchar',
             isUnique: true,
             isNullable: false,
           },
           {
-            name: 'author',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'publisher',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'category',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'createdAt',
+            name: 'created_at',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
           },
           {
-            name: 'updatedAt',
+            name: 'updated_at',
             type: 'timestamp',
             default: 'CURRENT_TIMESTAMP',
             onUpdate: 'CURRENT_TIMESTAMP',
@@ -52,6 +36,6 @@ export class CreateBooksTable1650502657178 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('books');
+    await queryRunner.dropTable('authors');
   }
 }

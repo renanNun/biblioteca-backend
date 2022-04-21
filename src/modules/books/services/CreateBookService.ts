@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import { ICreateBook } from '../../../domain/models/ICreateBook';
+import { ICreateBook } from '../../../domain/models/books/ICreateBook';
+import { IAuthorsRepository } from '../../../domain/repositories/IAuthorsRepository';
 import { IBooksRepository } from '../../../domain/repositories/IBooksRepository';
 import RedisCache from '../../../shared/cache/RedisCache';
 import AppError from '../../../shared/errors/AppError';
@@ -9,17 +10,37 @@ import { Book } from '../models/Book';
 export class CreateBookService {
   constructor(
     @inject('BooksRepository')
-    private readonly booksRepository: IBooksRepository
+    private readonly booksRepository: IBooksRepository,
+
+    @inject('AuthorsRepository')
+    private readonly authorsRepository: IAuthorsRepository
   ) {}
 
   public async execute(data: ICreateBook): Promise<Book> {
-    const existingBook = await this.booksRepository.findByTitle(data.title);
-
-    if (existingBook) {
-      throw new AppError('Book already exists', 400);
+    const existingAuthor = await this.authorsRepository.findByName(data.author);
+    console.log(existingAuthor);
+    if (!existingAuthor) {
+      throw new AppError('Author not found', 400);
     }
 
-    const book = await this.booksRepository.create(data);
+    const existingBook = await this.booksRepository.findByTitleAndAuthor(
+      data.title,
+      existingAuthor.id
+    );
+
+    if (existingBook) {
+      throw new AppError(
+        'An Book with this title and author already exists',
+        400
+      );
+    }
+
+    const book = await this.booksRepository.create({
+      title: data.title,
+      author: existingAuthor.id,
+      publisher: data.publisher,
+      photo: data.photo,
+    });
 
     await this.booksRepository.save(book);
 

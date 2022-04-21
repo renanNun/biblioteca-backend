@@ -12,6 +12,7 @@ export class ListAllBooksController {
       offset: offset ? Number(offset) : 1,
       limit: limit ? Number(limit) : 10,
       order: order ? String(order) : 'ASC',
+      author: author ? String(author) : undefined,
     });
 
     return response.status(200).json({
