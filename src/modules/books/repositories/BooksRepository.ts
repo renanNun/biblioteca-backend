@@ -41,4 +41,10 @@ export class BooksRepository implements IBooksRepository {
 
     return books;
   }
+
+  public async findById(id: string): Promise<Book> {
+    const book = await this.booksRepository.findOneOrFail(id);
+
+    return book;
+  }
 }

@@ -3,6 +3,7 @@ import { Router } from 'express';
 import Joi from 'joi';
 import { CreateBookController } from '../controllers/CreateBookController';
 import { ListAllBooksController } from '../controllers/ListAllBooksController';
+import { ShowBookController } from '../controllers/ShowBookController';
 
 const booksRouter = Router();
 
@@ -29,6 +30,16 @@ booksRouter.get(
     },
   }),
   new ListAllBooksController().handle
+);
+
+booksRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  new ShowBookController().handle
 );
 
 export default booksRouter;

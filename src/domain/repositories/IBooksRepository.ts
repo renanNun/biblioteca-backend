@@ -7,4 +7,5 @@ export interface IBooksRepository {
   create(data: ICreateBook): Promise<Book>;
   save(book: Book): Promise<void>;
   findAll(data: IListBooks): Promise<Book[]>;
+  findById(id: string): Promise<Book>;
 }
