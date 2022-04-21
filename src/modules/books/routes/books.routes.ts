@@ -13,7 +13,7 @@ booksRouter.post(
       title: Joi.string().required(),
       publisher: Joi.string().required(),
       photo: Joi.string().required(),
-      authors: Joi.array().items(Joi.string()).required(),
+      authors: Joi.string().required(),
     },
   }),
   new CreateBookController().handle

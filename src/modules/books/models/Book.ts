@@ -11,7 +11,7 @@ export class Book {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   title: string;
 
   @Column()
@@ -21,7 +21,7 @@ export class Book {
   publisher: string;
 
   @Column()
-  authors: Array<string>;
+  authors: string;
 
   @CreateDateColumn()
   createdAt: Date;
