@@ -25,7 +25,7 @@ services:
       - POSTGRES_DB=biblioteca-backend
 
   redis:
-    image: 'bitnami/redis:lastest-alpine'
+    image: 'bitnami/redis:latest'
     container_name: biblioteca-redis
     ports:
       - '6379:6379'

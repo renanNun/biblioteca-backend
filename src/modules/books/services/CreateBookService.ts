@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { ICreateBook } from '../../../domain/models/ICreateBook';
 import { IBooksRepository } from '../../../domain/repositories/IBooksRepository';
+import RedisCache from '../../../shared/cache/RedisCache';
 import AppError from '../../../shared/errors/AppError';
 import { Book } from '../models/Book';
 
@@ -21,6 +22,8 @@ export class CreateBookService {
     const book = await this.booksRepository.create(data);
 
     await this.booksRepository.save(book);
+
+    await RedisCache.invalidatePrefix('books');
 
     return book;
   }
