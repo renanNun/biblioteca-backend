@@ -8,6 +8,6 @@ export interface IAuthorsRepository {
   findAll(offset: number, limit: number): Promise<Author[] | undefined>;
   create(data: ICreateAuthor): Promise<Author>;
   save(author: Author): Promise<void>;
-  update(id: string, data: IUpdateAuthor): Promise<void>;
+  update(id: string, data: IUpdateAuthor): Promise<Author | undefined>;
   delete(id: string): Promise<void>;
 }

@@ -33,15 +33,17 @@ class RedisCache {
   }
 
   public async invalidatePrefix(prefix: string): Promise<void> {
-    const keys = await this.client.keys(`${prefix}:*`);
+    if (!this.connected) {
+      const keys = await this.client.keys(`${prefix}:*`);
 
-    const pipeline = this.client.pipeline();
+      const pipeline = this.client.pipeline();
 
-    keys.forEach((key) => {
-      pipeline.del(key);
-    });
+      keys.forEach((key) => {
+        pipeline.del(key);
+      });
 
-    await pipeline.exec();
+      await pipeline.exec();
+    }
   }
 
   public async invalidateAll(): Promise<void> {
@@ -50,6 +52,10 @@ class RedisCache {
 
   public async close(): Promise<void> {
     await this.client.disconnect();
+  }
+
+  public async isConnected(): Promise<boolean> {
+    return this.connected;
   }
 }
 

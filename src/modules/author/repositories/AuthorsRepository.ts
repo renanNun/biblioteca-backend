@@ -41,8 +41,15 @@ export class AuthorsRepositoy implements IAuthorsRepository {
     await this.authorsRepository.delete(id);
   }
 
-  public async update(id: string, data: IUpdateAuthor): Promise<void> {
-    await this.authorsRepository.update(id, data);
+  public async update(
+    id: string,
+    data: IUpdateAuthor
+  ): Promise<Author | undefined> {
+    const author = await this.authorsRepository.findOneOrFail(id);
+
+    author.name = data.name;
+
+    return author;
   }
 
   public async findAll(
